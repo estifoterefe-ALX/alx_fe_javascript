@@ -31,3 +31,37 @@ function addQuote() {
   category.value = "";
   alert("quotes added");
 }
+function createAddQuoteForm() {
+  const form = document.createElement("form");
+  const textInput = document.createElement("input");
+  textInput.type = "text";
+  textInput.required = true;
+  textInput.id = "newtext";
+  textInput.placeholder = "enter quotes";
+
+  const categoryInput = document.createElement("input");
+  categoryInput.type = "text";
+  categoryInput.required = true;
+  categoryInput.id = "newcategory";
+  categoryInput.placeholder = "enter category";
+
+  const button = document.createElement("button");
+  button.textContent = "submit";
+  button.type = "submit";
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    quotes.push({
+      text: textInput.value,
+      category: categoryInput.value,
+    });
+
+    // Clear inputs
+    textInput.value = "";
+  });
+
+  form.appendChild(textInput);
+  form.appendChild(categoryInput);
+  form.appendChild(button);
+}
