@@ -154,7 +154,8 @@ function filterQuotes() {
     displayer.appendChild(p);
   });
 }
-
-setInterval(() => {
-  datafetcher();
-}, 1000 * 120);
+function syncQuotes() {
+  setInterval(() => {
+    datafetcher();
+  }, 1000 * 120);
+}
