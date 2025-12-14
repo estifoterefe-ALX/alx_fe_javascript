@@ -12,7 +12,7 @@ let quotes = [];
 //     quotes = data;
 //     populateCategories();
 //   });
-async function datafetcher() {
+async function fetchQuotesFromServer() {
   try {
     const res = await fetch("http://localhost:3000/quotes", {
       method: "GET",
@@ -24,7 +24,7 @@ async function datafetcher() {
     alert("error1");
   }
 }
-datafetcher();
+fetchQuotesFromServer();
 function showRandomQuote() {
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const randomQuoteText = quotes[randomIndex].text;
