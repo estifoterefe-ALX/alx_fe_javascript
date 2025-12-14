@@ -14,7 +14,7 @@ let quotes = [];
 //   });
 async function fetchQuotesFromServer() {
   try {
-    const res = await fetch("http://localhost:3000/quotes", {
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "GET",
     });
     const data = await res.json();
