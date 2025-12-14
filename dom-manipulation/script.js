@@ -1,13 +1,30 @@
-const quotes = JSON.parse(localStorage.getItem("quotes")) || [
-  {
-    text: "The only way to do great work is to love what you do.",
-    category: "Inspiration",
-  },
-  {
-    text: "Life is what happens when you're busy making other plans.",
-    category: "Life",
-  },
-];
+let quotes = [];
+
+// fetch("http://localhost:3000/quotes", {
+//   method: "GET",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// })
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log(data);
+//     quotes = data;
+//     populateCategories();
+//   });
+async function datafetcher() {
+  try {
+    const res = await fetch("http://localhost:3000/quotes", {
+      method: "GET",
+    });
+    const data = await res.json();
+    quotes = data;
+    populateCategories();
+  } catch (error) {
+    alert("error1");
+  }
+}
+datafetcher();
 function showRandomQuote() {
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const randomQuoteText = quotes[randomIndex].text;
@@ -21,17 +38,28 @@ function showRandomQuote() {
 document.getElementById("newQuote").addEventListener("click", () => {
   showRandomQuote();
 });
-function addQuote() {
+async function addQuote() {
   const text = document.getElementById("newQuoteText");
   const category = document.getElementById("newQuoteCategory");
   quotes.push({
     text: text.value,
     category: category.value,
   });
-  text.value = "";
-  category.value = "";
-  localStorage.setItem("quotes", JSON.stringify(quotes));
-  alert("quotes added");
+  try {
+    const res = await fetch("http://localhost:3000/quotes", {
+      method: "POST",
+      body: {
+        text: text.value,
+        category: category.value,
+        id: quotes[quotes.length - 1].id + 1,
+      },
+    });
+    text.value = "";
+    category.value = "";
+    alert("quotes added");
+  } catch (error) {
+    alert("erro2r");
+  }
 }
 function createAddQuoteForm() {
   const form = document.createElement("form");
@@ -126,4 +154,7 @@ function filterQuotes() {
     displayer.appendChild(p);
   });
 }
-populateCategories();
+
+setInterval(() => {
+  datafetcher();
+}, 1000 * 120);

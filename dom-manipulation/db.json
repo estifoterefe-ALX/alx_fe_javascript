@@ -1,0 +1,19 @@
+{
+  "quotes": [
+    {
+      "id": 1,
+      "text": "The only way to do great work is to love what you do.",
+      "category": "Inspiration"
+    },
+    {
+      "id": 2,
+      "text": "Life is what happens when you're busy making other plans.",
+      "category": "Life"
+    },
+    {
+      "id": 3,
+      "text": "Success is not final, failure is not fatal.",
+      "category": "Success"
+    }
+  ]
+}
