@@ -156,6 +156,8 @@ function filterQuotes() {
 }
 function syncQuotes() {
   setInterval(() => {
-    datafetcher();
+    fetchQuotesFromServer();
+    alert("Quotes synced with server!");
   }, 1000 * 120);
 }
+syncQuotes();
