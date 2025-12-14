@@ -112,10 +112,12 @@ function populateCategories() {
 }
 
 function filterQuotes() {
-  const selected = document.getElementById("categoryFilter").value;
-  localStorage.setItem("lastfilter", selected);
+  const selectedCategory = document.getElementById("categoryFilter").value;
+  localStorage.setItem("lastfilter", selectedCategory);
   const displayer = document.getElementById("quoteDisplay");
-  const filterdArray = quotes.filter((item) => item.category === selected);
+  const filterdArray = quotes.filter(
+    (item) => item.category === selectedCategory
+  );
 
   displayer.innerHTML = "";
   filterdArray.forEach((item) => {
