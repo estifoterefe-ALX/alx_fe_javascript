@@ -1,4 +1,4 @@
-const quotes = [
+const quotes = JSON.parse(localStorage.getItem("quotes")) || [
   {
     text: "The only way to do great work is to love what you do.",
     category: "Inspiration",
@@ -15,6 +15,7 @@ function showRandomQuote() {
   const p = document.createElement("p");
   const displayer = document.getElementById("quoteDisplay");
   p.innerHTML = `${randomQuoteText} from category ${randomQuoteCategory}`;
+  sessionStorage.setItem("lastDisplayedQuote", randomIndex);
   displayer.appendChild(p);
 }
 document.getElementById("newQuote").addEventListener("click", () => {
@@ -29,6 +30,7 @@ function addQuote() {
   });
   text.value = "";
   category.value = "";
+  localStorage.setItem("quotes", JSON.stringify(quotes));
   alert("quotes added");
 }
 function createAddQuoteForm() {
@@ -64,4 +66,36 @@ function createAddQuoteForm() {
   form.appendChild(textInput);
   form.appendChild(categoryInput);
   form.appendChild(button);
+}
+function exportQuotes() {
+  const data = JSON.stringify(quotes);
+  const name = "quotes";
+  const type = "application/json";
+  const blob = new Blob([data], { type: type });
+
+  const a = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+
+  a.href = url;
+  a.download = name;
+  a.style.display = "none";
+
+  document.body.appendChild(a);
+  a.click();
+
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 2000);
+}
+
+function importFromJsonFile(event) {
+  const fileReader = new FileReader();
+  fileReader.onload = function (event) {
+    const importedQuotes = JSON.parse(event.target.result);
+    quotes.push(...importedQuotes);
+    saveQuotes();
+    alert("Quotes imported successfully!");
+  };
+  fileReader.readAsText(event.target.files[0]);
 }
