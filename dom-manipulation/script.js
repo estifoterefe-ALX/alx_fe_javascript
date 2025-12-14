@@ -99,3 +99,29 @@ function importFromJsonFile(event) {
   };
   fileReader.readAsText(event.target.files[0]);
 }
+function populateCategories() {
+  const uniqueCategories = [...new Set(quotes.map((q) => q.category))];
+  const filter = document.getElementById("categoryFilter");
+  uniqueCategories.forEach((item) => {
+    const o = document.createElement("option");
+    o.value = item;
+    o.textContent = item;
+    filter.appendChild(o);
+  });
+  filterQuotes();
+}
+
+function filterQuotes() {
+  const selected = document.getElementById("categoryFilter").value;
+  localStorage.setItem("lastfilter", selected);
+  const displayer = document.getElementById("quoteDisplay");
+  const filterdArray = quotes.filter((item) => item.category === selected);
+
+  displayer.innerHTML = "";
+  filterdArray.forEach((item) => {
+    const p = document.createElement("p");
+    p.innerHTML = `${item.text} from category ${item.category}`;
+    displayer.appendChild(p);
+  });
+}
+populateCategories();
